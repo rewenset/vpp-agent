@@ -22,8 +22,9 @@ cache:
 install: true
 
 stages:
+  - Check
   - name: E2E
-    if: /^force-e2e/
+    if: commit_message =~ /^force-e2e/
 
 jobs:
   include:
