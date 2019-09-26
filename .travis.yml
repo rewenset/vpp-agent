@@ -27,7 +27,7 @@ stages:
   - Build
   - Integration
   - name: E2E
-    if: type IN (cron) OR (type IN (push) AND branch IN (master, dev))
+    if: /^force-e2e/
 
 jobs:
   include:
@@ -48,11 +48,7 @@ jobs:
       name: "Code linter"
       script: make lint
     - name: "Unit tests"
-      before_script:
-        - go get github.com/mattn/goveralls
       script: make test-cover
-      after_success:
-        - goveralls -coverprofile=/tmp/coverage.out -service=travis-ci
 
     - stage: Build
       script:
@@ -83,14 +79,3 @@ jobs:
     - env: VPP_VERSION=2001
       script:
         - make e2e-tests
-
-notifications:
-  slack:
-    rooms:
-      - ligato:xLH4aTwGx1dexPaloAegQ74O
-    on_success: change
-    on_failure: always
-    template:
-      - "Build <%{build_url}|#%{build_number}> of *%{repository_slug}* on branch _%{branch}_ in PR: <%{pull_request_url}|#%{pull_request_number}>"
-      - "> `%{commit_subject}` _by %{author}_ (<%{compare_url}|%{commit}>)"
-      - "*%{message}* (_%{duration}_)"
