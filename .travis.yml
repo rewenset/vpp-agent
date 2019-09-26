@@ -22,10 +22,6 @@ cache:
 install: true
 
 stages:
-  - Check
-  - Test
-  - Build
-  - Integration
   - name: E2E
     if: /^force-e2e/
 
