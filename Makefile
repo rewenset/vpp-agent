@@ -141,7 +141,7 @@ integration-tests: ## Run integration tests
 
 e2e-tests: ## Run end-to-end tests
 	@echo "=> running end-to-end tests"
-	VPP_IMG=$(VPP_IMG) ./tests/e2e/run_e2e.sh
+	VPP_IMG=$(VPP_IMG) ./tests/e2e/run_e2e.sh -test.run TestAgentInSync
 
 e2e-tests-cover: ## Run end-to-end tests with coverage
 	@echo "=> running end-to-end tests with coverage"
